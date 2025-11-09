@@ -1,22 +1,10 @@
 import dotenv from "dotenv";
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import app from './src/app.js';
+import connectDB from './src/db/db.js';
 
 dotenv.config();
+connectDB()
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-const PORT = process.env.PORT || 3000;
-
-app.get("/", (req, res)=>{
-    res.send("Hello World");
-})
-
-app.listen(PORT, ()=>{
-    console.log("Server is running on port 3000");
+app.listen(process.env.PORT, () =>{
+    console.log(`Server running on ${process.env.PORT}`)
 })
