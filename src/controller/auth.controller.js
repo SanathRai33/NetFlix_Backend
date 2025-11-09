@@ -2,15 +2,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model.js";
 
-const authController = async (req, res) => {
+export const register = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!email || !password || !role) {
+    if (!name || !email || !password || !role) {
       return res.status(400).json({
         message: "All fields are required",
         success: false,
-        status: error,
+        status: 400,
       });
     }
 
@@ -29,7 +29,7 @@ const authController = async (req, res) => {
       return res.status(400).json({
         message: "User not created",
         success: false,
-        status: error,
+        status: 400,
       });
     }
 
@@ -41,11 +41,9 @@ const authController = async (req, res) => {
 
   } catch (error) {
     return res.status(500).json({
-      message: `Internal server error: ${error}`,
+      message: error.message || "Internal server error",
       success: false,
-      status: error,
+      status: 500,
     });
   }
 };
-
-export default authController;
